@@ -10,7 +10,7 @@ import {
   z,
 } from "../../deps.ts";
 import { Route as HttpRoute } from "../Route.ts";
-import { RouteConfigException } from "../RouteConfigException.ts";
+import { RouteDefinitionException } from "../RouteDefinitionException.ts";
 import { RouteException } from "../RouteException.ts";
 import { RouteDefinitionSchema } from "../schema.ts";
 import { RouteDefinitionType, RoutePathType } from "../types.ts";
@@ -85,7 +85,7 @@ export const Route = (
       );
     }
 
-    const routeConfig = {
+    const routeDef = {
       name,
       path,
       controller: descriptor.value,
@@ -97,19 +97,19 @@ export const Route = (
       ...config,
     };
 
-    const result = RouteDefinitionSchema.safeParse(routeConfig);
+    const result = RouteDefinitionSchema.safeParse(routeDef);
 
     if (!result.success) {
       const error = result.error.issues[0];
 
-      throw new RouteConfigException(
+      throw new RouteDefinitionException(
         `${error.path.join(".")}: ${error.message}`,
         null,
         { name, path },
       );
     }
 
-    const route = new HttpRoute(routeConfig);
+    const route = new HttpRoute(routeDef);
 
     routes.add(name, route);
   };

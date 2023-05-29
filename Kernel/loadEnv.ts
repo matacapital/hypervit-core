@@ -6,7 +6,7 @@ import {
   parseEnv as parse,
 } from "./deps.ts";
 
-export const parseEnv = (): ICollection<string, DotEnvValueType> => {
+export const loadEnv = (): ICollection<string, DotEnvValueType> => {
   const data = new Collection<string, DotEnvValueType>();
 
   let file = new File(".env");
@@ -27,7 +27,7 @@ export const parseEnv = (): ICollection<string, DotEnvValueType> => {
       VERSION: "1.0.0",
       SECRET: crypto.randomUUID(),
       DEBUG: true,
-      PORT: "3000",
+      PORT: 3000,
       HOST: "localhost",
       CHARSET: "utf-8",
     });

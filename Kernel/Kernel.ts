@@ -12,7 +12,7 @@ import {
   ZodError,
 } from "./deps.ts";
 import { EnvValidationException } from "./EnvValidationException.ts";
-import { parseEnv } from "./parseEnv.ts";
+import { loadEnv } from "./loadEnv.ts";
 
 window.Log = Log;
 
@@ -29,7 +29,7 @@ export class Kernel {
     registerConstant(Keys.App.RootDir, config.rootDir);
 
     // Load env vars
-    const env = parseEnv();
+    const env = loadEnv();
 
     const envData = env.toJson();
     const result = EnvSchema.safeParse(envData);

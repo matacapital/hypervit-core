@@ -10,8 +10,10 @@ import { DotEnvValueType } from "./types.ts";
 
 export class EnvHelper {
   private env: ICollection<string, DotEnvValueType>;
-  constructor() {
-    this.env = get<ICollection<string, DotEnvValueType>>(Keys.Env.Default);
+  constructor(key?: string | symbol) {
+    this.env = get<ICollection<string, DotEnvValueType>>(
+      key ?? Keys.Env.Default,
+    );
   }
 
   public getAppEnv(): AppEnvType {
