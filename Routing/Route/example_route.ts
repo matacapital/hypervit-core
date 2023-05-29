@@ -4,7 +4,7 @@ const routeDefinition: RouteDefinitionType = {
   name: "homepage",
   path: "/products/:id/:name",
   protocols: ["https", "http"],
-  hosts: ["api.ooneex.io", "ooneex.io"],
+  hosts: ["api.hypervit.io", "hypervit.io"],
   ips: ["127.0.0.1"],
   ports: [80, 8000],
   constraints: {

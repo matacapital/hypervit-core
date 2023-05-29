@@ -54,7 +54,7 @@ export const Head = (
 
       <meta
         name={"description"}
-        content={"ooneex-island-styles-fb26a3d7-6e80-4cda-a797-3c0163a517fc"}
+        content={"hypervit-island-styles-fb26a3d7-6e80-4cda-a797-3c0163a517fc"}
       />
 
       {styles &&

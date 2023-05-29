@@ -133,7 +133,7 @@ describe("Helper", () => {
     assertEquals(Helper.parseString("h42"), "h42");
     assertEquals(Helper.parseString("42.42"), 42.42);
     assertEquals(Helper.parseString("42.42.42"), "42.42.42");
-    assertEquals(Helper.parseString("[ooneex, 42]"), ["ooneex", 42]);
+    assertEquals(Helper.parseString("[hypervit, 42]"), ["hypervit", 42]);
     assertEquals(Helper.parseString("true"), true);
     assertEquals(Helper.parseString("false"), false);
     assertEquals(Helper.parseString("23.45"), 23.45);

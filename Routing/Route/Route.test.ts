@@ -35,7 +35,7 @@ describe("Route", () => {
 
     assertEquals(route.getPath(), "/products/:id/:name");
     assertEquals(route.getProtocols(), ["https", "http"]);
-    assertEquals(route.getHosts(), ["api.ooneex.io", "ooneex.io"]);
+    assertEquals(route.getHosts(), ["api.hypervit.io", "hypervit.io"]);
     assertEquals(route.getIps(), ["127.0.0.1"]);
     assertEquals(route.getPorts(), [80, 8000]);
     assertEquals(route.getDefault(), {

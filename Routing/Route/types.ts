@@ -50,7 +50,7 @@ export type RouteDefinitionType = {
   protocols?: z.infer<typeof RouteDefinitionSchema.shape.protocols>;
   /**
    * Allow hosts for this route
-   * @example ["api.ooneex.io"]
+   * @example ["api.hypervit.io"]
    */
   hosts?: z.infer<typeof RouteDefinitionSchema.shape.hosts>;
   /**

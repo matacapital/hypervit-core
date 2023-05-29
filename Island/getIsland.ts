@@ -41,10 +41,10 @@ export const getIsland = async (
 
   ${content}
 const elements = document.querySelectorAll<HTMLDivElement>(
-  'div[data-ooneex-island-id="${id}"]',
+  'div[data-hypervit-island-id="${id}"]',
 );
 elements.forEach((element) => {
-  const data = window.ooneex.store.islands.data;
+  const data = window.hypervit.store.islands.data;
   const useData = (key: string) => data[key] ?? null;
   element.innerHTML = "";
   render(() => <${file.getName()} useData={useData} />, element);

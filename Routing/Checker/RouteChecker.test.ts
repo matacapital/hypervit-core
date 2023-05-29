@@ -142,7 +142,7 @@ describe("Route Checker", () => {
     route = new Route({
       name: "user_show",
       path: "/users/:id",
-      hosts: ["localhost", "api.ooneex.com"],
+      hosts: ["localhost", "api.hypervit.com"],
       controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);
@@ -151,7 +151,7 @@ describe("Route Checker", () => {
     route = new Route({
       name: "user_show",
       path: "/users/:id",
-      hosts: ["api.ooneex.com"],
+      hosts: ["api.hypervit.com"],
       controller: () => new Response(),
     });
     checker = new RouteChecker(route, matched);

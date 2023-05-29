@@ -29,7 +29,7 @@ export const renderView: renderViewType = <T = unknown>(
   const resourcesCache: string[] = [];
 
   html = html.replace(
-    /data-ooneex-island ?= ?['"]([a-z0-9]+)__([a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+)['"]/ig,
+    /data-hypervit-island ?= ?['"]([a-z0-9]+)__([a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+)['"]/ig,
     (token: string, name: string, id: string) => {
       const resources = getAssets(name);
       resources.forEach((resource) => {
@@ -71,13 +71,13 @@ export const renderView: renderViewType = <T = unknown>(
   };
 
   html = html.replace(
-    `<meta name="description" content="ooneex-island-styles-fb26a3d7-6e80-4cda-a797-3c0163a517fc"/>`,
+    `<meta name="description" content="hypervit-island-styles-fb26a3d7-6e80-4cda-a797-3c0163a517fc"/>`,
     styles,
   );
   html = html.replace(
-    `<span style="display:none;" class="ooneex-island-scripts-e10a91b1-a672-4ff1-9d72-1150f3becaa0"></span>`,
+    `<span style="display:none;" class="hypervit-island-scripts-e10a91b1-a672-4ff1-9d72-1150f3becaa0"></span>`,
     `<script>
-      window.ooneex = ${JSON.stringify(store)};
+      window.hypervit = ${JSON.stringify(store)};
     </script>\n
     ${scripts}
     `,

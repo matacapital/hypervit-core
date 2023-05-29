@@ -20,7 +20,7 @@ export const Body = (
       {children}
       <span
         style={{ display: "none" }}
-        className={"ooneex-island-scripts-e10a91b1-a672-4ff1-9d72-1150f3becaa0"}
+        className={"hypervit-island-scripts-e10a91b1-a672-4ff1-9d72-1150f3becaa0"}
       />
       {scripts &&
         scripts.forEach((s) => {

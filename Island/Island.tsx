@@ -21,8 +21,8 @@ export const Island = (props: IslandPropsType) => {
 
   return (
     <div
-      data-ooneex-island-id={props.config.id}
-      data-ooneex-island={`${props.config.name}__${props.config.id}`}
+      data-hypervit-island-id={props.config.id}
+      data-hypervit-island={`${props.config.name}__${props.config.id}`}
     >
       {props.children}
     </div>
