@@ -25,7 +25,7 @@ export const getOptions = (
     mode,
     cacheDir: directories.var,
     build: {
-      outDir: `${directories.public}`,
+      outDir: `${directories.public}/build`,
       assetsDir: `${directories.islands}`,
       sourcemap: mode === "development",
       minify: mode === "production",
