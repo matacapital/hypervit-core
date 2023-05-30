@@ -64,11 +64,11 @@ elements.forEach((element) => {
   proxyFile.rm();
 
   const publicDir = config.directories.public;
-  const manifestFile = new File(`${publicDir}/build/manifest.json`);
+  const manifestFile = new File(`${publicDir}/dist/manifest.json`);
 
   if (!manifestFile.exists()) {
     throw new IslandException(
-      `Cannot found "${publicDir}/build/manifest.json"`,
+      `Cannot found "${publicDir}/dist/manifest.json"`,
     );
   }
 

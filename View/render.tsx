@@ -36,7 +36,9 @@ export const renderView: renderViewType = <T = unknown>(
         if (resource.css) {
           resource.css.forEach((css) => {
             if (!resourcesCache.includes(css)) {
-              styles += `<link rel="stylesheet" href="${asset(css)}">\n`;
+              styles += `<link rel="stylesheet" href="${
+                asset("dist/" + css)
+              }">\n`;
               resourcesCache.push(css);
             }
           });
@@ -44,7 +46,7 @@ export const renderView: renderViewType = <T = unknown>(
 
         if (!resourcesCache.includes(resource.file)) {
           scripts += `<script type="module" crossorigin src="${
-            asset(resource.file)
+            asset("dist/" + resource.file)
           }"></script>\n`;
           resourcesCache.push(resource.file);
         }
