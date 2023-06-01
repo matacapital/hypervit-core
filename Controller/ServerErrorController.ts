@@ -1,5 +1,6 @@
 import { ServerError } from "./Decorator/ServerError.ts";
 import {
+  // App,
   DotEnvValueType,
   EnvHelper,
   get,
@@ -38,10 +39,15 @@ export class ServerErrorController {
       line: exception.line,
       column: exception.column,
       status,
+      code: HttpCodeType[status],
       date: exception.date.toJSON(),
       stacks: exception.stacks,
       env: env.toJson(),
     };
+
+    // if (App.isView()) {
+    // return await response.render(ServerErrorView);
+    // }
 
     return response.json(body, status);
   }

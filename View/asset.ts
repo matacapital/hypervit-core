@@ -1,4 +1,4 @@
-import { ViewNotFoundException } from "./ViewNotFoundException.ts";
+import { AssetNotFoundException } from "./AssetNotFoundException.ts";
 import { File, get, Helper, Keys } from "./deps.ts";
 
 type LocalConfigType = { directories: { var: string; public: string } };
@@ -11,7 +11,9 @@ export const asset = (name: string): string => {
     const path = `${config.directories.public}/${name}`;
     const file = new File(path);
     if (!file.exists()) {
-      throw new ViewNotFoundException(`Cannot found asset "${file.getPath()}"`);
+      throw new AssetNotFoundException(
+        `Cannot found asset "${file.getPath()}"`,
+      );
     }
 
     return `/${path}`;

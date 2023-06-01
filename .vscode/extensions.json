@@ -2,6 +2,7 @@
   "recommendations": [
     "denoland.vscode-deno",
     "mikestead.dotenv",
-    "dskwrk.vscode-generate-getter-setter"
+    "dskwrk.vscode-generate-getter-setter",
+    "esbenp.prettier-vscode"
   ]
 }
