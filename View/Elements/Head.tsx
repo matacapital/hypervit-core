@@ -1,3 +1,4 @@
+import { asset } from "../asset.ts";
 import { ComponentChildren, EnvHelper, get, Keys } from "../deps.ts";
 
 // @ts-ignore: trust me
@@ -15,6 +16,8 @@ export const Head = (
   props: IHeaderProps,
 ) => {
   const envHelper = get<EnvHelper>(Keys.Env.Helper);
+  const appConfig = get<{ assets?: { styles?: string[] } }>(Keys.Config.App);
+  const globalStyles = appConfig?.assets?.styles;
 
   const {
     charset = envHelper.getCharset(),
@@ -57,8 +60,13 @@ export const Head = (
         content={"hypervit-island-styles-fb26a3d7-6e80-4cda-a797-3c0163a517fc"}
       />
 
+      {globalStyles &&
+        globalStyles.map((style) => (
+          <link rel={"stylesheet"} href={asset(style)} />
+        ))}
+
       {styles &&
-        styles.map((style) => <link rel={"stylesheet"} href={style} />)}
+        styles.map((style) => <link rel={"stylesheet"} href={asset(style)} />)}
 
       <title>{title}</title>
       {children}
