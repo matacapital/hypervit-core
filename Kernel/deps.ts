@@ -12,7 +12,7 @@ export { Exception } from "../Exception/Exception.ts";
 export { File } from "../File/File.ts";
 export { get } from "../Ioc/get.ts";
 export { registerConstant } from "../Ioc/register.ts";
-export { Keys } from "../Ioc/types.ts";
+export { Keys } from "../Ioc/Keys.ts";
 export { Route } from "../Routing/Route/Route.ts";
 export { Router } from "../Routing/Router/Router.ts";
 export { ZodError } from "../Validation/mod.ts";

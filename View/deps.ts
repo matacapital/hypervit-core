@@ -5,7 +5,7 @@ export { EnvHelper } from "../Env/EnvHelper.ts";
 export { Exception } from "../Exception/Exception.ts";
 export { File } from "../File/File.ts";
 export { Helper } from "../Helper/mod.ts";
+export { Keys } from "../Ioc/Keys.ts";
 export { get } from "../Ioc/get.ts";
-export { Keys } from "../Ioc/types.ts";
 export { getAssets } from "../Island/getAssets.ts";
 export type { LocalConfigType } from "../Island/types.ts";

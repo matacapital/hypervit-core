@@ -14,7 +14,7 @@ export { HttpStatusType } from "../Http/types.ts";
 export type { HttpMethodType, HttpProtocolType } from "../Http/types.ts";
 export { get, getOrNull } from "../Ioc/get.ts";
 export { registerConstant } from "../Ioc/register.ts";
-export { Keys } from "../Ioc/types.ts";
+export { Keys } from "../Ioc/Keys.ts";
 export { HttpMethodSchema, HttpProtocolSchema } from "../Module/Http/schema.ts";
 export { LocaleSchema } from "../Translation/schema.ts";
 export type { LocaleType } from "../Translation/types.ts";

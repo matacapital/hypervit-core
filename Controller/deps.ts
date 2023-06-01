@@ -15,6 +15,6 @@ export { HttpResponse } from "../Http/Response/HttpResponse.ts";
 export { HttpCodeType, HttpStatusType } from "../Http/types.ts";
 export { get } from "../Ioc/get.ts";
 export { registerConstant } from "../Ioc/register.ts";
-export { Keys } from "../Ioc/types.ts";
+export { Keys } from "../Ioc/Keys.ts";
 export type { RouteCheckerErrorType } from "../Routing/Checker/types.ts";
 export { RouteException } from "../Routing/Route/RouteException.ts";

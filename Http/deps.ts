@@ -17,7 +17,7 @@ export type { IFile } from "../File/types.ts";
 export { Helper } from "../Helper/mod.ts";
 export { get, getOrNull } from "../Ioc/get.ts";
 export { registerConstant } from "../Ioc/register.ts";
-export { Keys } from "../Ioc/types.ts";
+export { Keys } from "../Ioc/Keys.ts";
 export { HeaderChecker } from "../Module/Http/Header/HeaderChecker.ts";
 export type { IHeaderChecker } from "../Module/Http/Header/types.ts";
 export { Output } from "../Output/Output.ts";

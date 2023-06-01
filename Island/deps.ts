@@ -6,7 +6,7 @@ export { Exception } from "../Exception/Exception.ts";
 export { File } from "../File/File.ts";
 export { Helper } from "../Helper/mod.ts";
 export { get } from "../Ioc/get.ts";
-export { Keys } from "../Ioc/types.ts";
+export { Keys } from "../Ioc/Keys.ts";
 export { getAssetFromCache } from "../View/asset.ts";
 export { solid };
 import solid from "npm:vite-plugin-solid@^2.4.0";
