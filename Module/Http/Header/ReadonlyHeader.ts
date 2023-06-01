@@ -13,8 +13,6 @@ export class ReadonlyHeader extends HeaderChecker implements IReadonlyHeader {
 
   constructor(headers: Headers) {
     super(headers);
-
-    // TODO: handle cache control
   }
 
   public getCharset(): CharsetType {
@@ -23,6 +21,14 @@ export class ReadonlyHeader extends HeaderChecker implements IReadonlyHeader {
 
   public get(name: HeaderKeyType): string | null {
     return this._native.get(name);
+  }
+
+  public getCacheControl(): string | null {
+    return this.get("Cache-Control");
+  }
+
+  public getEtag(): string | null {
+    return this.get("Etag");
   }
 
   public getAccept(): HeaderAcceptType | null {

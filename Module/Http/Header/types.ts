@@ -30,6 +30,8 @@ export interface IReadonlyHeader extends IHeaderChecker {
   getRefererPolicy: () => string | null;
   getServer: () => string | null;
   getCharset: () => CharsetType;
+  getCacheControl: () => string | null;
+  getEtag: () => string | null;
   has: (name: HeaderKeyType) => boolean;
   keys: () => string[];
   count: () => number;

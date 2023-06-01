@@ -18,12 +18,22 @@ export class Header extends ReadonlyHeader implements IHeader {
     super(headers);
 
     this.native = headers;
-
-    // TODO: handle cache control
   }
 
   public setCharset(value: CharsetType): this {
     this.charset = value;
+
+    return this;
+  }
+
+  public setCacheControl(value: string): this {
+    this.add("Cache-Control", value);
+
+    return this;
+  }
+
+  public setEtag(value: string): this {
+    this.add("Etag", value);
 
     return this;
   }
