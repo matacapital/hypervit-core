@@ -1,6 +1,5 @@
-const __dirname = new URL(".", import.meta.url).pathname;
 const decoder = new TextDecoder("utf-8");
-const data = Deno.readFileSync(`${__dirname}/ServerError.css`);
+const data = Deno.readFileSync(`./ServerError.css`);
 const style = decoder.decode(data);
 
 export const ServerErrorView = () => {
