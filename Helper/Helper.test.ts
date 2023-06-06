@@ -149,6 +149,11 @@ describe("Helper", () => {
     assertEquals(Helper.randomString(10).length, 10);
   });
 
+  describe("randomHash", () => {
+    assertEquals(Helper.randomHash().length, 15);
+    assertEquals(Helper.randomHash(10).length, 10);
+  });
+
   describe("randomColor", () => {
     assertEquals(/^#[0-9A-F]{6}/.test(Helper.randomColor()), true);
   });

@@ -35,6 +35,7 @@ export const loadEnv = (): ICollection<string, DotEnvValueType> => {
       PORT: 3000,
       HOST: "localhost",
       CHARSET: "utf-8",
+      HASH: "06ab5a12afe58b3",
     });
   }
 

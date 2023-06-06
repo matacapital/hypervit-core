@@ -3,6 +3,15 @@
     "denoland.vscode-deno",
     "mikestead.dotenv",
     "dskwrk.vscode-generate-getter-setter",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "mikestead.dotenv",
+    "usernamehw.errorlens",
+    "pmneo.tsimporter",
+    "ms-vscode.vscode-typescript-next",
+    "sburg.vscode-javascript-booster",
+    "yoavbls.pretty-ts-errors",
+    "britesnow.vscode-toggle-quotes",
+    "chakrounanas.turbo-console-log",
+    "dskwrk.vscode-generate-getter-setter"
   ]
 }
