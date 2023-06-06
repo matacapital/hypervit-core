@@ -43,7 +43,8 @@ export class Kernel {
     }
 
     registerConstant(Keys.Env.Default, env);
-    registerConstant(Keys.Env.Helper, new EnvHelper());
+    const envHelper = new EnvHelper();
+    registerConstant(Keys.Env.Helper, envHelper);
 
     let configValidationError: null | ZodError = null;
     if (App.isApi()) {

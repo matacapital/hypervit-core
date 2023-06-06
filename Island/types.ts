@@ -2,18 +2,6 @@ import { JSX } from "./deps.ts";
 
 export type ViteOptionsModeType = "development" | "production";
 
-export type ViteOptionsType = Record<string, unknown> & {
-  mode: ViteOptionsModeType;
-  build: Record<string, unknown> & {
-    sourcemap: boolean;
-    minify: boolean;
-    css: {
-      devSourcemap: boolean;
-    };
-    watch: null | Record<string, unknown>;
-  };
-};
-
 export type LocalConfigType = {
   directories: {
     islands: string;
@@ -22,16 +10,12 @@ export type LocalConfigType = {
   };
 };
 
-export type IslandConfigType = { id: string; name: string; updatedAt: number };
+export type GetIslandReturnType = { id: string; name: string; date: number };
 
 export type IslandPropsType = {
-  config: IslandConfigType;
-  data?: {
-    key: string | number;
-    value: Record<string, unknown>;
-  };
+  name: string;
   children?: JSX.Element;
-};
+} & Record<string, unknown>;
 
 export type ManifestType = {
   assets?: string[];
@@ -39,5 +23,5 @@ export type ManifestType = {
   file: string;
   imports?: string[];
   isEntry?: boolean;
-  src?: string;
+  src: string;
 };

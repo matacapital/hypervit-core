@@ -19,6 +19,11 @@ export const loadEnv = (): ICollection<string, DotEnvValueType> => {
     data.setData(parse(file.read()));
   }
 
+  file = new File(".env.test");
+  if (file.exists()) {
+    data.setData(parse(file.read()));
+  }
+
   if (data.isEmpty()) {
     data.setData({
       APP_ENV: "local",

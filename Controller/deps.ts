@@ -9,6 +9,7 @@ export { Exception } from "../Exception/Exception.ts";
 export { print } from "../Exception/print.ts";
 export type { IException } from "../Exception/types.ts";
 export { File } from "../File/File.ts";
+export type { IFile } from "../File/types.ts";
 export { Helper } from "../Helper/mod.ts";
 export type { IRequest } from "../Http/Request/types.ts";
 export { HttpResponse } from "../Http/Response/HttpResponse.ts";

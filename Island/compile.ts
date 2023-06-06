@@ -1,11 +1,13 @@
 import { getOptions } from "./ViteOptions.ts";
-import { build } from "./deps.ts";
-import { ViteOptionsModeType } from "./types.ts";
+import { build, EnvHelper, get, Keys } from "./deps.ts";
 
-export const compileIslands = async (
-  island: string,
-  appEnv: ViteOptionsModeType,
-): Promise<void> => {
-  const viteOptions = getOptions(island, appEnv);
+export const compileIslands = async (): Promise<void> => {
+  const envHelper = get<EnvHelper>(Keys.Env.Helper);
+
+  const viteOptions = getOptions(
+    envHelper.isLocal() ? "development" : "production",
+  );
+
+  // @ts-ignore: trust me
   await build(viteOptions);
 };

@@ -22,6 +22,13 @@ export const serverHandler = async (
 ): Promise<Response> => {
   const request = new HttpRequest(req);
   const pathname = request.url?.pathname;
+  const envHelper = get<EnvHelper>(Keys.Env.Helper);
+
+  if (pathname && pathname.startsWith(`/islands/${envHelper.getHash()}/`)) {
+    const path = `${Deno.cwd()}/public/dist/hypervit${pathname}`;
+
+    return await serveFile(req, path);
+  }
 
   if (pathname && /^\/public\/.+/i.test(pathname)) {
     const path = `${Deno.cwd()}${pathname}`;
@@ -50,15 +57,12 @@ export const serverHandler = async (
 
   const route = router.findByPathname(request.url as Readonly<URL>);
   registerConstant(K.Route.Default, route);
-  // registerConstant(route?.id, K);
 
   if (!route) {
     return await response.notFound(
       `Route ${(request.url as Readonly<URL>).pathname} not found`,
     );
   }
-
-  const envHelper = get<EnvHelper>(Keys.Env.Helper);
 
   const params = request.getParams(route.getPath() as UrlPatternType);
   registerConstant(K.Route.Params, params ?? {});

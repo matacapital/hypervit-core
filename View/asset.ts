@@ -2,14 +2,17 @@ import { AssetNotFoundException } from "./AssetNotFoundException.ts";
 import { File, get, Helper, Keys } from "./deps.ts";
 
 type LocalConfigType = { directories: { var: string; public: string } };
+type GetAssetFromCacheReturnType = { name: string; date: number; id: string };
 
 export const asset = (name: string): string => {
   const config = get<LocalConfigType>(Keys.Config.App);
+  const publicDir = config.directories.public;
   name = Helper.trim(name, "/ ");
 
-  if (!/^@/.test(name)) {
-    const path = `${config.directories.public}/${name}`;
+  if (!name.startsWith("@")) {
+    const path = `${publicDir}/${name}`;
     const file = new File(path);
+
     if (!file.exists()) {
       throw new AssetNotFoundException(
         `Cannot found asset "${file.getPath()}"`,
@@ -26,11 +29,10 @@ export const asset = (name: string): string => {
     return "";
   }
 
-  const publicDir = config.directories.public;
   const updatedAt = file.updatedAt()?.getTime() as number;
 
-  const filename = getAssetFromCache(`${name}`, `${publicDir}/assets`);
-  const assetFile = new File(filename.name);
+  const filename = getAssetFromCache(`${name}`);
+  const assetFile = new File(`${publicDir}/${filename.name}`);
 
   if (!assetFile.exists()) {
     file.cp(`${assetFile.getPath()}`);
@@ -40,52 +42,45 @@ export const asset = (name: string): string => {
     }
   }
 
-  return `/${assetFile.getPath()}`;
+  return `${filename.name}`;
 };
 
 export const getAssetFromCache = (
   name: string,
-  directory?: string,
-): { name: string; date: number } => {
+): GetAssetFromCacheReturnType => {
   const config = get<LocalConfigType>(Keys.Config.App);
   const directories = config.directories;
   const varDir = directories.var;
   const file = new File(name);
-  const realName = name.replace(/\.__proxy__\.js$/i, ".tsx");
-  const assetsCacheFile = new File(`${varDir}/cache/assets.json`);
+  const assetsCacheFile = new File(`${varDir}/cache/assets/${name}.json`);
 
   if (!assetsCacheFile.exists()) {
     assetsCacheFile.writeJson({});
   }
 
-  const assetsCacheManifest = assetsCacheFile.json<
-    { name: string; date: number }
-  >();
+  let assetsCacheManifest: GetAssetFromCacheReturnType = assetsCacheFile.json<
+    string | number
+  >() as GetAssetFromCacheReturnType;
 
-  if (assetsCacheManifest[realName]) {
-    return assetsCacheManifest[realName];
+  if (assetsCacheManifest.id) {
+    return assetsCacheManifest;
   }
 
+  const id = crypto.randomUUID();
   let hash = "a";
   for (let i = 0; i < 15; i++) {
     hash += `${Helper.randomInt(9)}`;
   }
 
   const ext = file.getExt();
-  const realFile = new File(realName);
-  if (directory) {
-    assetsCacheManifest[realName] = {
-      name: `${Helper.trim(directory, "/")}/${hash}.${ext}`,
-      date: realFile.updatedAt()?.getTime() as number,
-    };
-  } else {
-    assetsCacheManifest[realName] = {
-      name: `${hash}.${ext}`,
-      date: realFile.updatedAt()?.getTime() as number,
-    };
-  }
+
+  assetsCacheManifest = {
+    name: `assets/${hash}.${ext}`,
+    date: file.updatedAt()?.getTime() as number,
+    id,
+  };
 
   assetsCacheFile.writeJson(assetsCacheManifest);
 
-  return assetsCacheManifest[realName];
+  return assetsCacheManifest;
 };

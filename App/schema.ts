@@ -26,6 +26,7 @@ export const EnvSchema = z.object({
   PORT: z.number().positive(),
   HOST: z.string(),
   CHARSET: CharsetSchema,
+  HASH: z.string(),
   TLS_KEY: z.string().optional(),
   TLS_CERT: z.string().optional(),
 });
@@ -41,6 +42,10 @@ export const ViewConfigSchema = z.object({
     var: z.string(),
     views: z.string(),
   }),
+  assets: z.object({
+    styles: z.string().array().optional(),
+    scripts: z.string().array().optional(),
+  }).optional(),
 });
 
 export const ApiConfigSchema = z.object({

@@ -1,62 +1,51 @@
-import { Directory, get, getAssetFromCache, Keys, solid } from "./deps.ts";
-import {
-  LocalConfigType,
-  ViteOptionsModeType,
-  ViteOptionsType,
-} from "./types.ts";
+import { Directory, EnvHelper, get, Keys, solid } from "./deps.ts";
+import { LocalConfigType, ViteOptionsModeType } from "./types.ts";
 
 export const getOptions = (
-  island: string,
   mode: ViteOptionsModeType,
 ) => {
   const config = get<LocalConfigType>(Keys.Config.App);
+  const envHelper = get<EnvHelper>(Keys.Env.Helper);
   const directories = config.directories;
   const directory = new Directory(directories.islands);
   const islands = directory.files(/\.tsx$/);
   const inputs: string[] = [];
+  const isDev = mode === "development";
+  const isProd = mode === "production";
 
   islands.forEach((island) => {
     inputs.push(island.getPath());
   });
 
-  const ViteOptions: ViteOptionsType = {
+  const ViteOptions = {
     appType: "custom",
     logLevel: "info",
     mode,
     cacheDir: directories.var,
     build: {
-      outDir: `${directories.public}/dist`,
+      outDir: `${directories.public}/dist/hypervit`,
       assetsDir: `${directories.islands}`,
-      sourcemap: mode === "development",
-      minify: mode === "production",
+      publicDir: `${directories.islands}`,
+      sourcemap: isDev,
+      minify: isProd,
       manifest: true,
       write: true,
-      emptyOutDir: false,
+      emptyOutDir: isProd,
       copyPublicDir: false,
       css: {
         devSourcemap: mode === "development",
       },
       rollupOptions: {
-        input: island,
+        input: inputs,
         output: {
-          entryFileNames: (chunkInfo: Record<"name", string>) =>
-            getAssetFromCache(
-              `${directories.islands}/${chunkInfo.name}.js`,
-              directories.islands,
-            ).name,
-          chunkFileNames: (chunkInfo: Record<"name", string>) =>
-            getAssetFromCache(
-              `${directories.islands}/${chunkInfo.name}.js`,
-              directories.islands,
-            ).name,
-          assetFileNames: (assetInfo: Record<"name", string>) =>
-            getAssetFromCache(
-              `${directories.islands}/${assetInfo.name}`,
-              directories.islands,
-            ).name,
+          entryFileNames: `islands/[${isDev ? "name" : "hash:15"}].js`,
+          chunkFileNames: `islands/[${isDev ? "name" : "hash:15"}].js`,
+          assetFileNames: `islands/${envHelper.getHash()}/[${
+            isDev ? "name" : "hash:15"
+          }][extname]`,
         },
       },
-      watch: null,
+      watch: (mode === "development") ? {} : null,
     },
     plugins: [solid({
       solid: {

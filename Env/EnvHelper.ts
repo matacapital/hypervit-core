@@ -16,6 +16,10 @@ export class EnvHelper {
     );
   }
 
+  public getHash(): string {
+    return this.env.get<string>("HASH") as string;
+  }
+
   public getAppEnv(): AppEnvType {
     return this.env.get<AppEnvType>("APP_ENV") as AppEnvType;
   }

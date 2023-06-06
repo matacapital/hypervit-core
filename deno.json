@@ -3,6 +3,7 @@
     "emitDecoratorMetadata": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
+    "strict": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -43,5 +44,19 @@
     "test:watch": "deno test -A --watch",
     "fmt": "deno fmt",
     "lint": "deno fmt --check && deno lint"
+  },
+  "lint": {
+    "exclude": [
+      "node_modules",
+      "public/dist/",
+      "var"
+    ]
+  },
+  "fmt": {
+    "exclude": [
+      "node_modules",
+      "public/dist",
+      "var"
+    ]
   }
 }
