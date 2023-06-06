@@ -45,10 +45,6 @@ export class ServerErrorController {
       env: env.toJson(),
     };
 
-    // if (App.isView()) {
-    // return await response.render(ServerErrorView);
-    // }
-
     return response.json(body, status);
   }
 }

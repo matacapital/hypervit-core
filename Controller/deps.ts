@@ -19,4 +19,3 @@ export { get } from "../Ioc/get.ts";
 export { registerConstant } from "../Ioc/register.ts";
 export type { RouteCheckerErrorType } from "../Routing/Checker/types.ts";
 export { RouteException } from "../Routing/Route/RouteException.ts";
-export { ServerErrorView } from "../View/ServerErrorView.tsx";
