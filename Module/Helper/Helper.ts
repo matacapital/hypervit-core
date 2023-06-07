@@ -231,6 +231,16 @@ export class Helper {
   }
 
   /**
+   * Converts text to snake case.
+   */
+  public static snakize(text: string): string {
+    return text.replace(/\W+/g, " ")
+      .split(/ |\B(?=[A-Z])/)
+      .map((word) => word.toLowerCase())
+      .join("_");
+  }
+
+  /**
    * Converts text to PascalCase.
    */
   public static pascalize(text: string): string {

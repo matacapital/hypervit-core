@@ -128,6 +128,10 @@ describe("Helper", () => {
     assertEquals(Helper.camelize("My    firstName---and"), "myFirstNameAnd");
   });
 
+  describe("snakize", () => {
+    assertEquals(Helper.snakize("My    firstName---and"), "my_first_name_and");
+  });
+
   describe("parseString", () => {
     assertEquals(Helper.parseString("42"), 42);
     assertEquals(Helper.parseString("h42"), "h42");
