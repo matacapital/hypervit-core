@@ -10,6 +10,13 @@ export class ConfirmPrompt extends AbstractPrompt {
     this.options = { message };
   }
 
+  public defaultValue(value: boolean): this {
+    // @ts-ignore: trust me
+    this.options.default = value;
+
+    return this;
+  }
+
   public async prompt(): Promise<boolean> {
     return await Confirm.prompt(this.options);
   }
