@@ -1,5 +1,7 @@
 import { CharsetSchema, LocaleSchema, VersionSchema, z } from "./deps.ts";
 
+export const AppTypeSchema = z.enum(["view", "api"]);
+
 export const AppEnvSchema = z.enum([
   "development",
   "local",
@@ -32,15 +34,16 @@ export const EnvSchema = z.object({
 });
 
 export const ViewConfigSchema = z.object({
+  type: AppTypeSchema,
   directories: z.object({
     components: z.string(),
     config: z.string(),
     controllers: z.string(),
     islands: z.string(),
-    middlewares: z.string(),
     public: z.string(),
     var: z.string(),
     views: z.string(),
+    root: z.string(),
   }),
   assets: z.object({
     styles: z.string().array().optional(),
@@ -49,10 +52,11 @@ export const ViewConfigSchema = z.object({
 });
 
 export const ApiConfigSchema = z.object({
+  type: AppTypeSchema,
   directories: z.object({
     config: z.string(),
     controllers: z.string(),
-    middlewares: z.string(),
     var: z.string(),
+    root: z.string(),
   }),
 });

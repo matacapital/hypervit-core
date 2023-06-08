@@ -7,4 +7,4 @@ export {
   relative,
   resolve,
   SEP,
-} from "https://deno.land/std@0.188.0/path/mod.ts";
+} from "https://deno.land/std@0.190.0/path/mod.ts";

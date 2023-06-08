@@ -1,10 +1,14 @@
+import { loadAppConfig } from "../Config/loadAppConfig.ts";
+import { loadControllers } from "../Controller/loadControllers.ts";
 import { ConfigValidationException } from "./ConfigValidationException.ts";
 import {
   ApiConfigSchema,
   App,
   AppType,
+  AppTypeSchema,
   EnvHelper,
   EnvSchema,
+  IFile,
   Keys,
   Log,
   registerConstant,
@@ -16,17 +20,31 @@ import { loadEnv } from "./loadEnv.ts";
 
 window.Log = Log;
 
-type BootConfigType = {
-  app: Record<string, unknown>;
+type AppConfigType = {
+  directories: Record<string, unknown>;
   type: AppType;
-  rootDir: string;
+};
+
+type BootReturnType = {
+  controllers: IFile[];
 };
 
 export class Kernel {
-  public static boot(config: BootConfigType): void {
-    registerConstant(Keys.Config.App, config.app);
+  public static boot(): BootReturnType {
+    // Load app config
+    const config = loadAppConfig<AppConfigType>();
+
+    const res = AppTypeSchema.safeParse(config.type);
+    if (!res.success) {
+      const error = res.error.issues[0];
+      throw new ConfigValidationException(
+        `${error.path.join(".")}: ${error.message}`,
+      );
+    }
+
+    registerConstant(Keys.Config.App, config);
     registerConstant(Keys.App.Type, config.type);
-    registerConstant(Keys.App.RootDir, config.rootDir);
+    registerConstant(Keys.App.RootDir, config.directories.root);
 
     // Load env vars
     const env = loadEnv();
@@ -48,14 +66,14 @@ export class Kernel {
 
     let configValidationError: null | ZodError = null;
     if (App.isApi()) {
-      const result = ApiConfigSchema.safeParse(config.app);
+      const result = ApiConfigSchema.safeParse(config);
       if (!result.success) {
         configValidationError = result.error;
       }
     }
 
     if (App.isView()) {
-      const result = ViewConfigSchema.safeParse(config.app);
+      const result = ViewConfigSchema.safeParse(config);
       if (!result.success) {
         configValidationError = result.error;
       }
@@ -71,5 +89,11 @@ export class Kernel {
 
     // Abort Controller
     registerConstant(Keys.AbortController, new AbortController());
+
+    const controllers = loadControllers(
+      config.directories.controllers as string,
+    );
+
+    return { controllers };
   }
 }
