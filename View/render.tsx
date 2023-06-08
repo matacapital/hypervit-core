@@ -1,6 +1,5 @@
 import { asset } from "./asset.ts";
 import {
-  EnvHelper,
   File,
   get,
   getIslandAssets,
@@ -14,7 +13,6 @@ export const renderView: renderViewType = <T = unknown>(
   View: ViewType<T>,
   data?: T,
 ): string => {
-  const envHelper = get<EnvHelper>(Keys.Env.Helper);
   const config = get<LocalConfigType>(Keys.Config.App);
   const varDir = config.directories.var;
 

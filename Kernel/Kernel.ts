@@ -10,15 +10,12 @@ import {
   EnvSchema,
   IFile,
   Keys,
-  Log,
   registerConstant,
   ViewConfigSchema,
   ZodError,
 } from "./deps.ts";
 import { EnvValidationException } from "./EnvValidationException.ts";
 import { loadEnv } from "./loadEnv.ts";
-
-window.Log = Log;
 
 type AppConfigType = {
   directories: Record<string, unknown>;
