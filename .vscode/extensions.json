@@ -1,17 +1,17 @@
 {
   "recommendations": [
+    "britesnow.vscode-toggle-quotes",
+    "chakrounanas.turbo-console-log",
     "denoland.vscode-deno",
-    "mikestead.dotenv",
+    "dskwrk.vscode-generate-getter-setter",
     "dskwrk.vscode-generate-getter-setter",
     "esbenp.prettier-vscode",
     "mikestead.dotenv",
-    "usernamehw.errorlens",
-    "pmneo.tsimporter",
+    "mikestead.dotenv",
     "ms-vscode.vscode-typescript-next",
+    "pmneo.tsimporter",
     "sburg.vscode-javascript-booster",
-    "yoavbls.pretty-ts-errors",
-    "britesnow.vscode-toggle-quotes",
-    "chakrounanas.turbo-console-log",
-    "dskwrk.vscode-generate-getter-setter"
+    "usernamehw.errorlens",
+    "yoavbls.pretty-ts-errors"
   ]
 }

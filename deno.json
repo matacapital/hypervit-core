@@ -54,5 +54,7 @@
     "exclude": [
       "node_modules"
     ]
-  }
+  },
+  "lock": false,
+  "nodeModulesDir": true
 }
