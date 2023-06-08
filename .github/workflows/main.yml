@@ -1,4 +1,4 @@
-name: "Hypervit Core Modules"
+name: "ci"
 run-name: "${{ github.event.head_commit.message }} [${{ github.actor }}]"
 
 on:

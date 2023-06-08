@@ -43,7 +43,8 @@
     "test": "deno test -A",
     "test:watch": "deno test -A --watch",
     "fmt": "deno fmt",
-    "lint": "deno fmt --check && deno lint"
+    "lint": "deno fmt --check && deno lint",
+    "cache:reload": "deno cache --reload ./**/*.ts"
   },
   "lint": {
     "exclude": [
