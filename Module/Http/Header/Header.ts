@@ -63,6 +63,7 @@ export class Header extends ReadonlyHeader implements IHeader {
   }
 
   public json(): this {
+    this.add("Accept", "application/json");
     this.contentType("application/json");
     this.contentType("application/ld+json");
 

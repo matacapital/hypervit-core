@@ -37,7 +37,7 @@ export class Router implements IRouter {
     const route = this.findByName(routeName);
 
     if (!route) {
-      throw new UrlGenerationException(`Cannot found route "${name}"`);
+      throw new UrlGenerationException(`Cannot found route "${routeName}"`);
     }
 
     params = { ...(route.getDefault()), ...params };
