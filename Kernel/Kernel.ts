@@ -6,11 +6,16 @@ import {
   App,
   AppType,
   AppTypeSchema,
+  Collection,
+  compileIslands,
   EnvHelper,
   EnvSchema,
+  get,
   IFile,
+  IRoute,
   Keys,
   registerConstant,
+  Router,
   ViewConfigSchema,
   ZodError,
 } from "./deps.ts";
@@ -92,5 +97,16 @@ export class Kernel {
     );
 
     return { controllers };
+  }
+
+  public static async terminate(): Promise<void> {
+    const routes = get<Collection<string, IRoute>>(Keys.Routes);
+    registerConstant(Keys.Router, new Router(routes));
+
+    const type = get<AppType>(Keys.App.Type);
+
+    if (type === "view") {
+      await compileIslands();
+    }
   }
 }

@@ -21,6 +21,8 @@ export type { IFile } from "../File/types.ts";
 export { Keys } from "../Ioc/Keys.ts";
 export { get } from "../Ioc/get.ts";
 export { registerConstant } from "../Ioc/register.ts";
+export { compileIslands } from "../Island/compile.ts";
 export { Route } from "../Routing/Route/Route.ts";
+export type { IRoute } from "../Routing/Route/types.ts";
 export { Router } from "../Routing/Router/Router.ts";
 export { ZodError } from "../Validation/mod.ts";
