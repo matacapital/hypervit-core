@@ -8,7 +8,7 @@ export const getOptions = (
   const envHelper = get<EnvHelper>(Keys.Env.Helper);
   const directories = config.directories;
   const directory = new Directory(directories.islands);
-  const islands = directory.files(/\.tsx$/);
+  const islands = directory.files(/\.tsx$/, true);
   const inputs: string[] = [];
   const isDev = mode === "development";
   const isProd = mode === "production";
