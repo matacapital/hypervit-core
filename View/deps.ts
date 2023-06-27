@@ -1,4 +1,8 @@
 export { Head } from "https://deno.land/x/fresh@1.2.0/runtime.ts";
+export type {
+  ErrorPageProps as ErrorPagePropsType,
+  UnknownPageProps as UnknownPagePropsType,
+} from "https://deno.land/x/fresh@1.2.0/server.ts";
 export type { ComponentChildren, JSX } from "https://esm.sh/preact@10.15.1";
 export { Collection } from "../Collection/mod.ts";
 export type { AppConfigType } from "../Config/types.ts";

@@ -1,3 +1,7 @@
+export type {
+  HandlerContext as HandlerContextType,
+  Handlers as HandlerType,
+} from "https://deno.land/x/fresh@1.2.0/server.ts";
 export { AppEnvSchema } from "../App/schema.ts";
 export type { MethodDecoratorReturnType } from "../Decorator/types.ts";
 export { Directory } from "../Directory/Directory.ts";
