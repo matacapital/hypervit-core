@@ -1,11 +1,15 @@
 import { asset } from "../asset.ts";
-import { ComponentChildren, EnvHelper, get, Keys } from "../deps.ts";
+import {
+  AppConfigType,
+  ComponentChildren,
+  Container,
+  Head as FreshHead,
+  Keys,
+} from "../deps.ts";
 
 // @ts-ignore: trust me
 export interface IHeaderProps extends HTMLAttributes<HTMLHeadElement> {
-  charset?: string;
   favicon?: string;
-  viewport?: string;
   description?: string;
   styles?: string[];
   children?: ComponentChildren;
@@ -15,23 +19,21 @@ export interface IHeaderProps extends HTMLAttributes<HTMLHeadElement> {
 export const Head = (
   props: IHeaderProps,
 ) => {
-  const envHelper = get<EnvHelper>(Keys.Env.Helper);
-  const appConfig = get<{ assets?: { styles?: string[] } }>(Keys.Config.App);
-  const globalStyles = appConfig?.assets?.styles;
+  const appConfig = Container.get(
+    Keys.Config.App,
+  ) as AppConfigType;
+
+  const stylesToInject = appConfig.inject?.styles;
 
   const {
-    charset = envHelper.getCharset(),
     favicon,
-    viewport = "width=device-width, initial-scale=1.0",
     title,
     children,
     styles,
     description,
   } = props;
 
-  delete props.charset;
   delete props.favicon;
-  delete props.viewport;
   delete props.children;
   delete props.styles;
   // @ts-ignore: trust me
@@ -39,9 +41,7 @@ export const Head = (
   delete props.description;
 
   return (
-    <head {...props}>
-      {charset && <meta charSet={charset} />}
-
+    <FreshHead {...props}>
       {favicon &&
         (
           <link
@@ -51,25 +51,18 @@ export const Head = (
           />
         )}
 
-      {viewport && <meta name={"viewport"} content={viewport} />}
-
       {description && <meta name={"description"} content={description} />}
 
-      <meta
-        name={"description"}
-        content={"hypervit-island-styles-fb26a3d7-6e80-4cda-a797-3c0163a517fc"}
-      />
-
-      {globalStyles &&
-        globalStyles.map((style) => (
+      {stylesToInject &&
+        stylesToInject.map((style) => (
           <link rel={"stylesheet"} href={asset(style)} />
         ))}
 
       {styles &&
-        styles.map((style) => <link rel={"stylesheet"} href={asset(style)} />)}
+        styles.map((style) => <link rel={"stylesheet"} href={style} />)}
 
       <title>{title}</title>
       {children}
-    </head>
+    </FreshHead>
   );
 };

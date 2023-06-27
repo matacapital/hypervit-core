@@ -1,5 +1,4 @@
-import { assertEquals } from "testing/asserts.ts";
-import { describe, it } from "testing/bdd.ts";
+import { assertEquals, describe, it } from "@testing";
 import { Path } from "./mod.ts";
 
 describe("Path", () => {

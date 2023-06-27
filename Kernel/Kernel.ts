@@ -1,112 +1,53 @@
+import { ConfigException } from "../Config/ConfigException.ts";
 import { loadAppConfig } from "../Config/loadAppConfig.ts";
-import { loadControllers } from "../Controller/loadControllers.ts";
-import { ConfigValidationException } from "./ConfigValidationException.ts";
-import {
-  ApiConfigSchema,
-  App,
-  AppType,
-  AppTypeSchema,
-  Collection,
-  compileIslands,
-  EnvHelper,
-  EnvSchema,
-  get,
-  IFile,
-  IRoute,
-  Keys,
-  registerConstant,
-  Router,
-  ViewConfigSchema,
-  ZodError,
-} from "./deps.ts";
-import { EnvValidationException } from "./EnvValidationException.ts";
-import { loadEnv } from "./loadEnv.ts";
-
-type AppConfigType = {
-  directories: Record<string, unknown>;
-  type: AppType;
-};
+import { ConfigSchema } from "../Config/schema.ts";
+import { AppConfigType } from "../Config/types.ts";
+import { Container, Keys } from "../Container/Container.ts";
+import { loadEnv } from "../Env/loadEnv.ts";
+import { File } from "../File/mod.ts";
+import type { IFile } from "../File/types.ts";
+import { loadHandlers } from "../Handler/loadHandlers.ts";
+import { EnvHelper } from "../Http/deps.ts";
 
 type BootReturnType = {
-  controllers: IFile[];
+  handlers: IFile[];
 };
 
 export class Kernel {
   public static boot(): BootReturnType {
-    // Load app config
-    const config = loadAppConfig<AppConfigType>();
-
-    const res = AppTypeSchema.safeParse(config.type);
-    if (!res.success) {
-      const error = res.error.issues[0];
-      throw new ConfigValidationException(
-        `${error.path.join(".")}: ${error.message}`,
-      );
-    }
-
-    registerConstant(Keys.Config.App, config);
-    registerConstant(Keys.App.Type, config.type);
-    registerConstant(Keys.App.RootDir, config.directories.root);
-
-    // Load env vars
     const env = loadEnv();
+    Container.add(Keys.Env.Default, env);
 
-    const envData = env.toJson();
-    const result = EnvSchema.safeParse(envData);
+    const appConfig: AppConfigType = loadAppConfig();
+    const result = ConfigSchema.safeParse(appConfig);
 
     if (!result.success) {
       const error = result.error.issues[0];
 
-      throw new EnvValidationException(
+      throw new ConfigException(
         `${error.path.join(".")}: ${error.message}`,
       );
     }
 
-    registerConstant(Keys.Env.Default, env);
-    const envHelper = new EnvHelper();
-    registerConstant(Keys.Env.Helper, envHelper);
+    Container.add(Keys.Config.App, appConfig);
 
-    let configValidationError: null | ZodError = null;
-    if (App.isApi()) {
-      const result = ApiConfigSchema.safeParse(config);
-      if (!result.success) {
-        configValidationError = result.error;
-      }
-    }
-
-    if (App.isView()) {
-      const result = ViewConfigSchema.safeParse(config);
-      if (!result.success) {
-        configValidationError = result.error;
-      }
-    }
-
-    if (configValidationError) {
-      const error = configValidationError.issues[0];
-
-      throw new ConfigValidationException(
-        `${error.path.join(".")}: ${error.message}`,
+    // Copy files
+    // TODO: Copy folders
+    const filesToCopy = appConfig.copy ?? {};
+    Object.keys(filesToCopy).forEach((file) => {
+      const destination = "static/" + filesToCopy[file].replace(
+        /\[hash\]/,
+        EnvHelper.getHash(),
       );
-    }
+      const to = new File(destination);
+      if (!to.exists()) {
+        const from = new File(file);
+        from.cp(destination);
+      }
+    });
 
-    // Abort Controller
-    registerConstant(Keys.AbortController, new AbortController());
+    const handlers = loadHandlers("handlers");
 
-    const controllers = loadControllers(
-      config.directories.controllers as string,
-    );
-
-    return { controllers };
-  }
-
-  public static async terminate(): Promise<void> {
-    const routes = get<Collection<string, IRoute>>(Keys.Routes);
-    registerConstant(Keys.Router, new Router(routes));
-
-    const type = get<AppType>(Keys.App.Type);
-
-    if (type === "view") {
-      await compileIslands();
-    }
+    return { handlers };
   }
 }

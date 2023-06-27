@@ -1,5 +1,4 @@
-import { assertEquals } from "testing/asserts.ts";
-import { describe, it } from "testing/bdd.ts";
+import { assertEquals, describe, it } from "@testing";
 import { Exception } from "./Exception.ts";
 
 class FakeException extends Exception {}
@@ -20,7 +19,7 @@ describe("Exception", () => {
   });
 
   it("line", () => {
-    assertEquals(fakeException.line, 8);
+    assertEquals(fakeException.line, 7);
   });
 
   it("column", () => {

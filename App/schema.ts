@@ -1,5 +1,6 @@
 import { CharsetSchema, LocaleSchema, VersionSchema, z } from "./deps.ts";
 
+// TODO: to remove
 export const AppTypeSchema = z.enum(["view", "api"]);
 
 export const AppEnvSchema = z.enum([
@@ -51,6 +52,7 @@ export const ViewConfigSchema = z.object({
   }).optional(),
 });
 
+// TODO: to remove
 export const ApiConfigSchema = z.object({
   type: AppTypeSchema,
   directories: z.object({

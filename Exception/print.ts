@@ -38,7 +38,7 @@ export const print = (
   if (data) {
     output.writeln(`Debug`, "color: white; font-weight: bold");
 
-    Object.keys(data).map((datum) => {
+    Object.keys(data).forEach((datum) => {
       output.writeln(
         `${Figure.bullet()} ${datum}: ${
           (data as Record<string, string>)[datum]

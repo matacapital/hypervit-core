@@ -1,5 +1,4 @@
-import { assertEquals } from "testing/asserts.ts";
-import { it } from "testing/bdd.ts";
+import { assertEquals, it } from "@testing";
 import { DotEnvValueType, parseEnv } from "./mod.ts";
 
 const content = `# dev | prod | test | demo

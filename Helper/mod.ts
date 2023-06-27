@@ -1,1 +1,1 @@
-export * from "../Module/Helper/Helper.ts";
+export * from "./Helper.ts";

@@ -1,11 +1,12 @@
-import { File } from "@file";
-import { Path } from "@path";
 import {
+  afterAll,
   assertEquals,
   assertInstanceOf,
   assertThrows,
-} from "testing/asserts.ts";
-import { afterAll, describe, it } from "testing/bdd.ts";
+  describe,
+  it,
+} from "@testing";
+import { File, Path } from "./deps.ts";
 import { Directory, DirectoryException } from "./mod.ts";
 
 describe("Directory", () => {

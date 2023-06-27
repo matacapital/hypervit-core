@@ -1,17 +1,12 @@
-import { get, Keys } from "./deps.ts";
 import { AppType } from "./types.ts";
 
 export class App {
-  public static getConfig<T = unknown>(): T {
-    return get<T>(Keys.Config.App);
-  }
-
   public static getType(): AppType {
-    return get<AppType>(Keys.App.Type);
+    return "view";
   }
 
   public static getRootDir(): string {
-    return get<string>(Keys.App.RootDir);
+    return ".";
   }
 
   public static isApi(): boolean {

@@ -26,5 +26,8 @@ export const parseEnv = (content: string): DotEnvType => {
     }
   });
 
+  // TODO: add key injection
+  // TODO: https://deno.land/std@0.192.0/dotenv/mod.ts
+
   return result;
 };
