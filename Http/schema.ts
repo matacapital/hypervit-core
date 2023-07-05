@@ -1,15 +1,13 @@
 import { z } from "../Validation/mod.ts";
 
 export const HttpMethodSchema = z.enum([
-  "CONNECT",
-  "DELETE",
   "GET",
   "HEAD",
-  "OPTIONS",
-  "PATCH",
   "POST",
   "PUT",
-  "TRACE",
+  "DELETE",
+  "OPTIONS",
+  "PATCH",
 ]);
 
 export const HttpProtocolSchema = z.enum([

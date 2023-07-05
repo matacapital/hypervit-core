@@ -1,1 +1,1 @@
-export type { HandlerContextType, HandlerType } from "./deps.ts";
+export type { HandlerContextType } from "./deps.ts";

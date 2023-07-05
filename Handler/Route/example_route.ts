@@ -2,7 +2,7 @@ import { RouteDefinitionType } from "./types.ts";
 
 const routeDefinition: RouteDefinitionType = {
   name: "homepage",
-  path: "/products/:id/:name",
+  handler: () => new Response(),
   protocols: ["https", "http"],
   hosts: ["api.hypervit.io", "hypervit.io"],
   ips: ["127.0.0.1"],
@@ -26,7 +26,6 @@ const routeDefinition: RouteDefinitionType = {
   locales: ["fr", "en"],
   envs: ["development", "testing", "production"],
   versions: ["1.2.3", "2.0.0"],
-  controller: (): Response => new Response(),
   description: "Route description",
 };
 
