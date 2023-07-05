@@ -49,7 +49,7 @@ describe("Collection", () => {
   it("find", () => {
     const mouse = products.find((value, _key, _map) => value.price < 30);
     assertNotEquals(mouse?.first(), null);
-    assertEquals(mouse?.first()?.key, "mouse");
+    assertEquals(mouse?.first()?.get("mouse").name, "mouse");
   });
 
   it("remove", () => {
