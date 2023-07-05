@@ -1,9 +1,14 @@
 import { Helper } from "./deps.ts";
-import { CallbackFnType, CollectionKeyType, ICollection } from "./types.ts";
+import {
+  CallbackFnType,
+  CollectionKeyType,
+  IReadonlyCollection,
+} from "./types.ts";
 
-export class Collection<K extends CollectionKeyType = string, V = unknown>
-  extends Map
-  implements ICollection<K, V> {
+export class ReadonlyCollection<
+  K extends CollectionKeyType = string,
+  V = unknown,
+> extends Map implements IReadonlyCollection<K, V> {
   public count(): number {
     return this.size;
   }
@@ -12,8 +17,8 @@ export class Collection<K extends CollectionKeyType = string, V = unknown>
     return this.count() === 0;
   }
 
-  public search(search: RegExp): Collection<K, V> {
-    const result = new Collection<K, V>();
+  public search(search: RegExp): IReadonlyCollection<K, V> {
+    const result = new ReadonlyCollection<K, V>();
 
     for (const [key, value] of this) {
       if (!Helper.isString(key)) {
@@ -28,8 +33,8 @@ export class Collection<K extends CollectionKeyType = string, V = unknown>
     return result;
   }
 
-  public filter(callbackFn: CallbackFnType<K, V>): Collection<K, V> {
-    const result = new Collection<K, V>();
+  public filter(callbackFn: CallbackFnType<K, V>): IReadonlyCollection<K, V> {
+    const result = new ReadonlyCollection<K, V>();
 
     for (const [key, value] of this) {
       if (callbackFn(value, key, this)) {
@@ -40,8 +45,10 @@ export class Collection<K extends CollectionKeyType = string, V = unknown>
     return result;
   }
 
-  public find(callbackFn: CallbackFnType<K, V>): Collection<K, V> | null {
-    const result = new Collection<K, V>();
+  public find(
+    callbackFn: CallbackFnType<K, V>,
+  ): IReadonlyCollection<K, V> | null {
+    const result = new ReadonlyCollection<K, V>();
 
     for (const [key, value] of this) {
       if (callbackFn(value, key, this)) {
@@ -54,8 +61,8 @@ export class Collection<K extends CollectionKeyType = string, V = unknown>
     return null;
   }
 
-  public first(): Collection<K, V> | null {
-    const result = new Collection<K, V>();
+  public first(): IReadonlyCollection<K, V> | null {
+    const result = new ReadonlyCollection<K, V>();
 
     for (const [key, value] of this) {
       result.set(key, value);
@@ -77,14 +84,6 @@ export class Collection<K extends CollectionKeyType = string, V = unknown>
     }
 
     return result;
-  }
-
-  public add(key: K, value: V): this {
-    return this.set(key, value);
-  }
-
-  public remove(key: K): boolean {
-    return this.delete(key);
   }
 
   public setData(data: { [K in CollectionKeyType]: V }): this {
