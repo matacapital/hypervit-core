@@ -18,6 +18,20 @@ export const RouteConstraintsSchema = z.object({
 });
 
 export const RouteDefinitionSchema = z.object({
+  path: z.custom<string>(
+    (value) => {
+      if ((value as string) === "/") {
+        return true;
+      }
+
+      if (!/^[a-z0-9\/:_-]+$/.test(value as string)) {
+        return false;
+      }
+
+      return true;
+    },
+    `Format not valid. Try "/path-name/:param-1/:param-2"`,
+  ),
   handler: z.function(),
   methods: HttpMethodSchema.array().optional(),
   protocols: HttpProtocolSchema.array().optional(),
