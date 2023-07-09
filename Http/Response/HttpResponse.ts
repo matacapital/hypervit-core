@@ -7,10 +7,10 @@ import { IResponse } from "./types.ts";
 export class HttpResponse implements IResponse {
   public readonly data: Collection = new Collection();
   public readonly body: Collection = new Collection();
-  public readonly status: HttpStatusType = HttpStatusType.OK;
+  public status: HttpStatusType = HttpStatusType.OK;
   public readonly header: Header = new Header();
 
-  constructor(public readonly ctx: HandlerContextType) {}
+  constructor(public readonly ctx?: HandlerContextType) {}
 
   /**
    * Render string response
@@ -34,7 +34,7 @@ export class HttpResponse implements IResponse {
     status?: HttpStatusType,
   ): Response {
     return this.buildResponse(
-      JSON.stringify({ ...this.body.toJson(), ...data }),
+      JSON.stringify({ ...this.body.toJson(), ...this.data.toJson(), ...data }),
       "application/json",
       status,
     );
@@ -43,17 +43,32 @@ export class HttpResponse implements IResponse {
   /**
    * Render component response
    */
-  public render<T = unknown>(
+  public render<T = Record<string, unknown>>(
     data?: T,
     status?: HttpStatusType,
   ): Promise<Response> | Response {
+    if (!this.ctx) {
+      return this.json(data as Record<string, unknown>, status);
+    }
+
+    this.ctx.state = { ...this.body.toJson(), ...this.data.toJson(), ...data };
+
     return this.ctx.render(data, this.getInitOptions(status));
   }
 
   /**
    * Render not found response
    */
-  public notFound(): Promise<Response> | Response {
+  public notFound(
+    data?: Record<string, unknown>,
+  ): Promise<Response> | Response {
+    if (!this.ctx) {
+      return this.json(
+        data as Record<string, unknown> ?? {},
+        HttpStatusType.NotFound,
+      );
+    }
+
     return this.ctx.renderNotFound();
   }
 

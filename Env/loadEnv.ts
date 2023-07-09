@@ -6,6 +6,19 @@ import { DotEnvValueType } from "./types.ts";
 export const loadEnv = (): ICollection<string, DotEnvValueType> => {
   const data = new Collection<string, DotEnvValueType>();
 
+  let envData: Record<string, DotEnvValueType> = {
+    APP_ENV: "local",
+    LOCALE: "en",
+    COUNTRY: "United States",
+    VERSION: "1.0.0",
+    SECRET: crypto.randomUUID(),
+    DEBUG: true,
+    PORT: 3000,
+    HOST: "localhost",
+    CHARSET: "utf-8",
+    HASH: "06ab5a12afe58b3",
+  };
+
   for (
     const key of [
       ".env",
@@ -17,26 +30,10 @@ export const loadEnv = (): ICollection<string, DotEnvValueType> => {
   ) {
     const file = new File(key);
     if (file.exists()) {
-      data.setData(parseEnv(file.read()));
+      envData = { ...envData, ...parseEnv(file.read()) };
     }
   }
 
-  if (data.isEmpty()) {
-    data.setData({
-      APP_ENV: "local",
-      LOCALE: "en",
-      COUNTRY: "United States",
-      VERSION: "1.0.0",
-      SECRET: crypto.randomUUID(),
-      DEBUG: true,
-      PORT: 3000,
-      HOST: "localhost",
-      CHARSET: "utf-8",
-      HASH: "06ab5a12afe58b3",
-    });
-  }
-
-  const envData = data.toJson();
   const result = EnvSchema.safeParse(envData);
 
   if (!result.success) {
@@ -46,6 +43,8 @@ export const loadEnv = (): ICollection<string, DotEnvValueType> => {
       `${error.path.join(".")}: ${error.message}`,
     );
   }
+
+  data.setData(envData);
 
   for (const [key, value] of data) {
     Deno.env.set(`${key}`, `${value}`);

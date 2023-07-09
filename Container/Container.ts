@@ -1,4 +1,4 @@
-import { Collection } from "../Collection/Collection.ts";
+import { Collection } from "./deps.ts";
 
 export const Container = new Collection();
 export const Keys = {
@@ -9,4 +9,5 @@ export const Keys = {
     Default: `env-default-${crypto.randomUUID()}`,
     Helper: `env-helper-${crypto.randomUUID()}`,
   },
+  Routes: `routes-${crypto.randomUUID()}`,
 };

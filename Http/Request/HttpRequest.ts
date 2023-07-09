@@ -1,4 +1,4 @@
-import { IReadonlyCollection, ReadonlyCollection } from "../deps.ts";
+import { Helper, IReadonlyCollection, ReadonlyCollection } from "../deps.ts";
 import { HeaderChecker } from "../Header/HeaderChecker.ts";
 import { ReadonlyHeader } from "../Header/ReadonlyHeader.ts";
 import { HttpMethodType } from "../types.ts";
@@ -11,16 +11,24 @@ export class HttpRequest extends HeaderChecker implements IRequest {
   public readonly method: HttpMethodType;
   public readonly searchParams: IReadonlyCollection;
   public readonly params: IReadonlyCollection;
+  public readonly protocol: string;
+  public readonly hostname: string;
+  public readonly port: number;
+  public readonly pathname: string;
 
   constructor(
     public readonly native: Request,
-    public readonly hostname: string,
-    public readonly port: number,
     params: Record<string, string>,
   ) {
     super(native.headers);
 
     this.url = new URL(native.url);
+
+    this.protocol = Helper.trim(this.url.protocol, ":");
+    this.hostname = this.url.hostname;
+    this.port = Helper.parseString<number>(this.url.port);
+    this.pathname = this.url.pathname;
+
     this.header = new ReadonlyHeader(native.headers);
     const searchParams = new ReadonlyCollection();
     for (const [key, value] of this.url.searchParams) {

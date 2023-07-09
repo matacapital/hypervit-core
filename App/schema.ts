@@ -1,8 +1,5 @@
 import { CharsetSchema, LocaleSchema, VersionSchema, z } from "./deps.ts";
 
-// TODO: to remove
-export const AppTypeSchema = z.enum(["view", "api"]);
-
 export const AppEnvSchema = z.enum([
   "development",
   "local",
@@ -32,33 +29,4 @@ export const EnvSchema = z.object({
   HASH: z.string(),
   TLS_KEY: z.string().optional(),
   TLS_CERT: z.string().optional(),
-});
-
-export const ViewConfigSchema = z.object({
-  type: AppTypeSchema,
-  directories: z.object({
-    components: z.string(),
-    config: z.string(),
-    controllers: z.string(),
-    islands: z.string(),
-    public: z.string(),
-    var: z.string(),
-    views: z.string(),
-    root: z.string(),
-  }),
-  assets: z.object({
-    styles: z.string().array().optional(),
-    scripts: z.string().array().optional(),
-  }).optional(),
-});
-
-// TODO: to remove
-export const ApiConfigSchema = z.object({
-  type: AppTypeSchema,
-  directories: z.object({
-    config: z.string(),
-    controllers: z.string(),
-    var: z.string(),
-    root: z.string(),
-  }),
 });

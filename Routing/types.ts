@@ -1,6 +1,5 @@
 import { AppEnvType } from "../App/types.ts";
 import { HttpMethodType, LocaleType, VersionType } from "./deps.ts";
-export type { HandlerContextType } from "./deps.ts";
 
 export type MatchedRouteParamsType = Record<
   string | number,

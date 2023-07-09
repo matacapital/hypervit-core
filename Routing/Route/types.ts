@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse, z } from "../deps.ts";
 import { RouteConstraintsSchema, RouteDefinitionSchema } from "./schema.ts";
 
-export type RoutePathType = z.infer<typeof RouteDefinitionSchema.shape.path>;
+// export type RoutePathType = z.infer<typeof RouteDefinitionSchema.shape.path>;
 export type RouteDefaultValuesType = z.infer<
   typeof RouteDefinitionSchema.shape.default
 >;
@@ -10,13 +10,12 @@ export type RouteConstraintsType = z.infer<typeof RouteConstraintsSchema>;
 
 export type RouteDefinitionType = {
   /**
-   * Name of route
-   */
-  name: z.infer<typeof RouteDefinitionSchema.shape.name>;
-  /**
    * Handler to trigger if this route matched
    */
-  handler: (request: HttpRequest, response: HttpResponse) => Response;
+  handler: (
+    request: HttpRequest,
+    response: HttpResponse,
+  ) => Response | Promise<Response>;
 
   /**
    * Allowed methods for this route

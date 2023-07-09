@@ -4,12 +4,8 @@ import { ConfigSchema } from "../Config/schema.ts";
 import { AppConfigType } from "../Config/types.ts";
 import { Container, Keys } from "../Container/Container.ts";
 import { loadEnv } from "../Env/loadEnv.ts";
-import type { IFile } from "../File/types.ts";
-import { loadHandlers } from "../Handler/loadHandlers.ts";
 
-type BootReturnType = {
-  handlers: IFile[];
-};
+type BootReturnType = void;
 
 export class Kernel {
   public static boot(): BootReturnType {
@@ -28,9 +24,5 @@ export class Kernel {
     }
 
     Container.add(Keys.Config.App, appConfig);
-
-    const handlers = loadHandlers("handlers");
-
-    return { handlers };
   }
 }

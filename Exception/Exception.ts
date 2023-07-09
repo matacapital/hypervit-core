@@ -1,36 +1,41 @@
+import { Container } from "./deps.ts";
 import { IException, StackType } from "./types.ts";
 
 export class Exception extends Error implements IException {
   public readonly name: string;
+  public readonly reason: string;
   public readonly stacks: StackType[];
   public readonly file: string | null;
   public readonly line: number | null;
   public readonly column: number | null;
   public readonly date: Date = new Date();
+  public readonly id: string;
 
   // deno-lint-ignore constructor-super
   constructor(
     message: string | Error,
     public readonly status: number | null = null,
-    private readonly data: Readonly<unknown> | null = null,
+    public readonly data: Readonly<unknown> | null = null,
   ) {
     if (message instanceof Error) {
-      super((message as Error).message);
+      super(crypto.randomUUID());
       this.name = message.constructor.name;
-      this.stacks = this.parseStack(message.stack as string);
+      this.reason = (message as Error).message;
     } else {
-      super(message as string);
+      super(crypto.randomUUID());
       this.name = this.constructor.name;
-      this.stacks = this.parseStack(this.stack as string);
+      this.reason = message;
     }
+
+    this.stacks = this.parseStack(this.stack as string);
+
+    this.id = this.message;
 
     this.file = this.stacks.length > 0 ? this.stacks[0].file : null;
     this.line = this.stacks.length > 0 ? this.stacks[0].line : null;
     this.column = this.stacks.length > 0 ? this.stacks[0].column : null;
-  }
 
-  public getData<T>(): T | null {
-    return this.data as (T | null);
+    Container.add(this.id, this);
   }
 
   private parseStack(stack: string): StackType[] {

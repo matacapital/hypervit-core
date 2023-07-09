@@ -1,5 +1,11 @@
-import { HttpMethodSchema, HttpProtocolSchema } from "../../Http/schema.ts";
-import { AppEnvSchema, LocaleSchema, VersionSchema, z } from "../deps.ts";
+import {
+  AppEnvSchema,
+  HttpMethodSchema,
+  HttpProtocolSchema,
+  LocaleSchema,
+  VersionSchema,
+  z,
+} from "../deps.ts";
 
 export const RouteConstraintsSchema = z.object({
   where: z.record(z.string(), z.string().or(z.number())).optional(),
@@ -12,21 +18,6 @@ export const RouteConstraintsSchema = z.object({
 });
 
 export const RouteDefinitionSchema = z.object({
-  name: z.string(),
-  path: z.custom<string>(
-    (value) => {
-      if ((value as string) === "/") {
-        return true;
-      }
-
-      if (!/^[a-z0-9\/:_-]+$/.test(value as string)) {
-        return false;
-      }
-
-      return true;
-    },
-    `Format not valid. Try "/path-name/:param-1/:param-2"`,
-  ),
   handler: z.function(),
   methods: HttpMethodSchema.array().optional(),
   protocols: HttpProtocolSchema.array().optional(),

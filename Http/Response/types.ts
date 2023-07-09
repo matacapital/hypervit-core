@@ -5,7 +5,7 @@ import { HttpStatusType } from "../types.ts";
 export interface IResponse {
   readonly data: Collection;
   readonly body: Collection;
-  readonly status: HttpStatusType;
+  status: HttpStatusType;
   readonly header: Header;
   string: (content: string, status?: HttpStatusType) => Response;
   html: (content: string, status?: HttpStatusType) => Response;

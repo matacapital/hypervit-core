@@ -1,3 +1,4 @@
+import { CollectionException } from "./CollectionException.ts";
 import { Helper } from "./deps.ts";
 import { CallbackFnType, CollectionKeyType, ICollection } from "./types.ts";
 
@@ -80,6 +81,16 @@ export class Collection<K extends CollectionKeyType = string, V = unknown>
   }
 
   public add(key: K, value: V): this {
+    return this.set(key, value);
+  }
+
+  public addOrException(key: K, value: V): this {
+    if (this.has(key)) {
+      throw new CollectionException(
+        `cannot add "${key as string}". Key already exists`,
+      );
+    }
+
     return this.set(key, value);
   }
 

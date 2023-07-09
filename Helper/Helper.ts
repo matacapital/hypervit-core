@@ -169,25 +169,25 @@ export class Helper {
     return text.charAt(0).toLowerCase() + text.slice(1);
   }
 
-  public static parseString(text: string): unknown {
+  public static parseString<T = unknown>(text: string): T {
     if (/^[0-9]+$/.test(text)) {
-      return parseInt(text, 10);
+      return parseInt(text, 10) as T;
     }
 
     if (/^[0-9]+\.[0-9]+$/.test(text)) {
-      return parseFloat(text);
+      return parseFloat(text) as T;
     }
 
     if (/^true$/i.test(text)) {
-      return true;
+      return true as T;
     }
 
     if (/^false$/i.test(text)) {
-      return false;
+      return false as T;
     }
 
     if (/^null$/i.test(text)) {
-      return null;
+      return null as T;
     }
 
     if (/^\[/.test(text) && /]$/.test(text)) {
@@ -199,13 +199,13 @@ export class Helper {
         values[index] = Helper.parseString(value as string);
       });
 
-      return values;
+      return values as T;
     }
 
     try {
       return JSON.parse(text);
     } catch {
-      return text;
+      return text as T;
     }
   }
 
