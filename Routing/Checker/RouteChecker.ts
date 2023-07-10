@@ -1,4 +1,4 @@
-import { Helper, HttpProtocolType } from "../deps.ts";
+import { Helper, HttpProtocolType, HttpStatusType } from "../deps.ts";
 import { RouteDefinitionType } from "../Route/types.ts";
 import { MatchedRouteType } from "../types.ts";
 import { RouteCheckerException } from "./RouteCheckerException.ts";
@@ -8,7 +8,6 @@ export class RouteChecker {
     private route: RouteDefinitionType,
     private matchedRoute: MatchedRouteType,
   ) {
-    // TODO: add error status
     this.checkMethod();
     this.checkIp();
     this.checkLocale();
@@ -32,7 +31,10 @@ export class RouteChecker {
       return true;
     }
 
-    throw new RouteCheckerException(`Method "${method}" not matched`);
+    throw new RouteCheckerException(
+      `Method "${method}" not allowed`,
+      HttpStatusType.MethodNotAllowed,
+    );
   }
 
   public checkIp(): true {
@@ -47,7 +49,10 @@ export class RouteChecker {
       return true;
     }
 
-    throw new RouteCheckerException(`IP "${ip}" not matched`);
+    throw new RouteCheckerException(
+      `IP "${ip}" not matched`,
+      HttpStatusType.NotAcceptable,
+    );
   }
 
   public checkLocale(): true {
@@ -62,7 +67,10 @@ export class RouteChecker {
       return true;
     }
 
-    throw new RouteCheckerException(`Locale "${locale}" not matched`);
+    throw new RouteCheckerException(
+      `Locale "${locale}" not matched`,
+      HttpStatusType.NotAcceptable,
+    );
   }
 
   public checkEnv(): true {
@@ -77,7 +85,10 @@ export class RouteChecker {
       return true;
     }
 
-    throw new RouteCheckerException(`Env "${env}" not matched`);
+    throw new RouteCheckerException(
+      `Env "${env}" not matched`,
+      HttpStatusType.NotAcceptable,
+    );
   }
 
   public checkVersion(): true {
@@ -92,7 +103,10 @@ export class RouteChecker {
       return true;
     }
 
-    throw new RouteCheckerException(`Version "${version}" not matched`);
+    throw new RouteCheckerException(
+      `Version "${version}" not matched`,
+      HttpStatusType.NotAcceptable,
+    );
   }
 
   public checkHostname(): true {
@@ -108,7 +122,10 @@ export class RouteChecker {
       return true;
     }
 
-    throw new RouteCheckerException(`Host "${host}" not matched`);
+    throw new RouteCheckerException(
+      `Host "${host}" not matched`,
+      HttpStatusType.NotAcceptable,
+    );
   }
 
   public checkProtocol(): true {
@@ -124,7 +141,10 @@ export class RouteChecker {
       return true;
     }
 
-    throw new RouteCheckerException(`Protocol "${protocol}" not matched`);
+    throw new RouteCheckerException(
+      `Protocol "${protocol}" not matched`,
+      HttpStatusType.NotAcceptable,
+    );
   }
 
   public checkPort(): true {
@@ -145,7 +165,10 @@ export class RouteChecker {
       return true;
     }
 
-    throw new RouteCheckerException(`Port "${port}" not matched`);
+    throw new RouteCheckerException(
+      `Port "${port}" not matched`,
+      HttpStatusType.NotAcceptable,
+    );
   }
 
   public checkConstraints(): true {
@@ -163,12 +186,16 @@ export class RouteChecker {
     const whereConstraints = constraints.where ?? {};
     Object.keys(whereConstraints).map((key) => {
       if (!Helper.hasProperty(params, key)) {
-        throw new RouteCheckerException(`[where] "${key}" param missing`);
+        throw new RouteCheckerException(
+          `[where] "${key}" param missing`,
+          HttpStatusType.NotAcceptable,
+        );
       }
       // @ts-ignore: trust me
       if (`${params[key]}` !== `${whereConstraints[key]}`) {
         throw new RouteCheckerException(
           `"${key}" param must be equal to ${whereConstraints[key]}`,
+          HttpStatusType.NotAcceptable,
         );
       }
     });
@@ -177,13 +204,17 @@ export class RouteChecker {
     const regexConstraints = constraints.regex ?? {};
     Object.keys(regexConstraints).map((key) => {
       if (!Helper.hasProperty(params, key)) {
-        throw new RouteCheckerException(`"${key}" param missing`);
+        throw new RouteCheckerException(
+          `"${key}" param missing`,
+          HttpStatusType.NotAcceptable,
+        );
       }
 
       // @ts-ignore: trust me
       if (!regexConstraints[key].test(`${params[key]}`)) {
         throw new RouteCheckerException(
           `"${key}" param must match with "${regexConstraints[key]}"`,
+          HttpStatusType.NotAcceptable,
         );
       }
     });
@@ -192,7 +223,10 @@ export class RouteChecker {
     const numberConstraints = constraints.number ?? [];
     numberConstraints.map((key) => {
       if (!Helper.hasProperty(params, key)) {
-        throw new RouteCheckerException(`"${key}" param missing`);
+        throw new RouteCheckerException(
+          `"${key}" param missing`,
+          HttpStatusType.NotAcceptable,
+        );
       }
 
       const reg = /^[0-9]+$/;
@@ -201,6 +235,7 @@ export class RouteChecker {
       if (!reg.test(`${params[key]}`)) {
         throw new RouteCheckerException(
           `"${key}" param must match with "${reg}"`,
+          HttpStatusType.NotAcceptable,
         );
       }
     });
@@ -209,7 +244,10 @@ export class RouteChecker {
     const alphaNumericConstraints = constraints.alphaNumeric ?? [];
     alphaNumericConstraints.map((key) => {
       if (!Helper.hasProperty(params, key)) {
-        throw new RouteCheckerException(`"${key}" param missing`);
+        throw new RouteCheckerException(
+          `"${key}" param missing`,
+          HttpStatusType.NotAcceptable,
+        );
       }
 
       const reg = /^[a-z0-9]+$/;
@@ -223,6 +261,7 @@ export class RouteChecker {
       ) {
         throw new RouteCheckerException(
           `"${key}" param must match with "${/[a-z]+/}" and "${/[0-9]+/}"`,
+          HttpStatusType.NotAcceptable,
         );
       }
     });
@@ -231,7 +270,10 @@ export class RouteChecker {
     const inConstraints = constraints.in ?? {};
     Object.keys(inConstraints).map((key) => {
       if (!Helper.hasProperty(params, key)) {
-        throw new RouteCheckerException(`"${key}" param missing`);
+        throw new RouteCheckerException(
+          `"${key}" param missing`,
+          HttpStatusType.NotAcceptable,
+        );
       }
 
       // @ts-ignore: trust me
@@ -240,6 +282,7 @@ export class RouteChecker {
           `"${key}" param must equal to " ${
             inConstraints[key].join('" or "')
           }"`,
+          HttpStatusType.NotAcceptable,
         );
       }
     });
