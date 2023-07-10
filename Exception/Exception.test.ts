@@ -11,11 +11,7 @@ describe("Exception", () => {
   });
 
   it("message", () => {
-    assertEquals(fakeException.message, fakeException.id);
-  });
-
-  it("reason", () => {
-    assertEquals(fakeException.reason, "Fake exception");
+    assertEquals(fakeException.message, "Fake exception");
   });
 
   it("stack", () => {
@@ -35,6 +31,6 @@ describe("Exception", () => {
   });
 
   it("data", () => {
-    assertEquals(fakeException.data, null);
+    assertEquals(fakeException.data, {});
   });
 });

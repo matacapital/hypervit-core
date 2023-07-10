@@ -33,7 +33,7 @@ export const print = (
     `${Figure.arrowRight()} ${exception.file} ${exception.line}:${exception.column}`,
   );
 
-  const data = exception.getData<Record<string, string> | null>();
+  const data = exception.data as Record<string, string>;
 
   if (data) {
     output.writeln(`Debug`, "color: white; font-weight: bold");

@@ -3,7 +3,7 @@ export * from "./Elements/Head.tsx";
 export * from "./Elements/Page.tsx";
 export * from "./asset.ts";
 export type {
-  ErrorViewPropsType,
   NotFoundViewPropsType,
+  ServerErrorViewPropsType,
   ViewPropsType,
 } from "./deps.ts";

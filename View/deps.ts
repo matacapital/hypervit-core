@@ -1,6 +1,6 @@
 export { Head } from "https://deno.land/x/fresh@1.2.0/runtime.ts";
 export type {
-  ErrorPageProps as ErrorViewPropsType,
+  ErrorPageProps as ServerErrorViewPropsType,
   PageProps as ViewPropsType,
   UnknownPageProps as NotFoundViewPropsType,
 } from "https://deno.land/x/fresh@1.2.0/server.ts";
