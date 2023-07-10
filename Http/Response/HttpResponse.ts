@@ -1,6 +1,12 @@
 import { Header } from "../Header/Header.ts";
 import { HeaderContentTypeType } from "../Header/types.ts";
-import { Collection, File, HandlerContextType, Helper } from "../deps.ts";
+import {
+  Collection,
+  File,
+  generateUrl,
+  HandlerContextType,
+  Helper,
+} from "../deps.ts";
 import { HttpCodeType, HttpStatusType } from "../types.ts";
 import { IResponse } from "./types.ts";
 
@@ -99,26 +105,23 @@ export class HttpResponse implements IResponse {
   /**
    * Redirect by route definition name
    */
-  // public redirect(
-  // routeName: string,
-  // params: Record<string, string | number> = {},
-  // status?: HttpStatusType,
-  // ): Response {
-  // const router = get<Router>(Keys.Router);
-  // const url = router.generateUrl(routeName, params);
-  //
-  // return Response.redirect(
-  // new URL(url),
-  // status ?? HttpStatusType.TemporaryRedirect,
-  // );
-  // }
+  public redirect(
+    routeName: string,
+    params: Record<string, string | number> = {},
+    baseUrl?: URL | null,
+    status?: HttpStatusType | null,
+  ): Response {
+    const path = generateUrl(routeName, params, baseUrl);
 
-  // public redirectToUrl(
-  // url: string | URL,
-  // status?: HttpStatusType,
-  // ): Response {
-  // return Response.redirect(url, status ?? HttpStatusType.TemporaryRedirect);
-  // }
+    return this.redirectToUrl(path, status ?? HttpStatusType.TemporaryRedirect);
+  }
+
+  public redirectToUrl(
+    url: string | URL,
+    status?: HttpStatusType,
+  ): Response {
+    return Response.redirect(url, status ?? HttpStatusType.TemporaryRedirect);
+  }
 
   private getInitOptions(status?: HttpStatusType): ResponseInit {
     status = status ?? this.status;

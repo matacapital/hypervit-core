@@ -6,6 +6,8 @@ import {
   MatchedRouteParamsType,
   MatchedRouteType,
   RouteChecker,
+  RouteConfigException,
+  RouteDefinitionSchema,
   Router,
 } from "./deps.ts";
 
@@ -17,6 +19,16 @@ export const ProxyHandler = (
   const request = new HttpRequest(req, ctx.params);
   const response = new HttpResponse(ctx);
   const config = Router.get(routeName);
+
+  const result = RouteDefinitionSchema.safeParse(config);
+  if (!result.success) {
+    const error = result.error.issues[0];
+
+    throw new RouteConfigException(
+      `${error.path.join(".")}: ${error.message}`,
+    );
+  }
+
   const localAddr = ctx.localAddr as { hostname: string };
 
   const matchedRoute: MatchedRouteType = {

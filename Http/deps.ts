@@ -15,6 +15,7 @@ export type { IFile } from "../File/types.ts";
 export type { HandlerContextType } from "../Handler/types.ts";
 export { Helper } from "../Helper/Helper.ts";
 export { Output } from "../Output/Output.ts";
+export { generateUrl } from "../Router/Router.ts";
 export type { LocaleType } from "../Translation/types.ts";
 export type { VersionType } from "../Version/types.ts";
 

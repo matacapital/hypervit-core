@@ -9,6 +9,8 @@ export { HttpResponse } from "../Http/Response/HttpResponse.ts";
 export type { HttpMethodType } from "../Http/types.ts";
 export { Router } from "../Router/Router.ts";
 export { RouteChecker } from "../Routing/Checker/RouteChecker.ts";
+export { RouteConfigException } from "../Routing/Route/RouteConfigException.ts";
+export { RouteDefinitionSchema } from "../Routing/Route/schema.ts";
 export type {
   MatchedRouteParamsType,
   MatchedRouteType,
